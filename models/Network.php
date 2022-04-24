@@ -3,9 +3,8 @@
 namespace models;
 
 /**
- * @package activistNetwork
- *
  * Class Network
+ * @package models
  */
 abstract class Network
 {

@@ -3,9 +3,8 @@
 namespace models;
 
 /**
- * @package activistNetwork
- *
  * Class Node
+ * @package models
  */
 class Node
 {

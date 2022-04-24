@@ -22,7 +22,7 @@
  * We will implement this by using a HashTable.
  * The HashTable has the activist name as key and the activist object as node.
  * Each node has _parent node (except for the root node) and possibly children nodes.
- * Tested with php 7.3
+ * Tested with php 7.3.33
  */
 
 namespace activistNetwork;
@@ -30,19 +30,21 @@ namespace activistNetwork;
 use controllers\NetworkController;
 use models\Activist;
 use models\ActivistNetwork;
+use views\Home;
 
 #ini_set('display_errors', 'off');	#turn off Debug mode
-defined('CSS_PATH') or define ('CSS_PATH', 'assets/styles');
-defined('JS_PATH') or define ('JS_PATH', 'assets/scripts');
+defined('CSS_PATH') or define ('CSS_PATH', 'assets/styles/');
+defined('JS_PATH') or define ('JS_PATH', 'assets/scripts/');
+defined('TEMPLATES_PATH') or define ('TEMPLATES_PATH', 'templates/');
 
 #Autolad all classes found
 spl_autoload_register(function ($className) {
 	require_once str_replace("\\","/", $className) . '.php';
 });
 
-require_once 'views/home.php';
+(new Home())->view();
 (new NetworkController())->init();
-#Usage code
+
 if (isset($_GET['activist-name']))
 {
 	/** @var Activist $activist */
@@ -56,5 +58,3 @@ if (isset($_GET['activist-name']))
 	}
 	echo '<br /><a href=".">Clear</a>';
 }
-?>
-<script type="text/javascript" src="<?= JS_PATH ?>/main.js"></script>

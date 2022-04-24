@@ -3,9 +3,8 @@
 namespace models;
 
 /**
- * @package activistNetwork
- *
  * Class Action
+ * @package models
  */
 class Action
 {

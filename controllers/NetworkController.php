@@ -6,9 +6,8 @@ use models\Action;
 use models\Activist;
 
 /**
- * @package activistNetwork
- *
  * Class NetworkController
+ * @package controllers
  */
 class NetworkController
 {

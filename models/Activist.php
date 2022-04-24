@@ -3,9 +3,8 @@
 namespace models;
 
 /**
- * @package activistNetwork
- *
  * Class Activist
+ * @package models
  */
 class Activist extends Node
 {
