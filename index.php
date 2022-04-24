@@ -25,106 +25,23 @@
  * Tested with php 7.3
  */
 
-namespace test1;
-?>
+namespace activistNetwork;
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+use controllers\NetworkController;
+use models\Activist;
+use models\ActivistNetwork;
 
-        <title>
-            Interview Test 1
-        </title>
-
-        <style>
-            #headline {margin-top: 20px; font-weight: bold; text-decoration: underline; font-size: 120%;}
-            #error {display: inline-block; color: #7793bb;}
-            #depth0 {color: #06bfe5;}
-            #depth1 {color: #09a1e5;}
-            #depth2 {color: #0283e5;}
-            #depth3 {color: #0062e5;}
-            #depth4 {color: #002ee5;}   /* We could use Sass here to have variable selectors and variable color values */
-
-            .hoverable {
-                position: relative;
-            }
-
-            .hoverable >.hoverable__tooltip {
-                display: none;
-            }
-
-            .hoverable:hover > .hoverable__tooltip {
-                display: inline;
-                position: absolute;
-                /*bottom: 20px;*/
-                left: 150px;
-                background: white;
-				color: black;
-                border: 1px solid black;
-				border-radius: 5px;
-            }
-        </style>
-
-    </head>
-    <body>
-
-    <br />
-    <div id="section">
-		<button data-val="koyan" class="btn activist-btn">koyan</button>
-		<button data-val="remy" class="btn activist-btn">remy</button>
-		<button data-val="bill" class="btn activist-btn">bill</button>
-		<button data-val="maria" class="btn activist-btn">maria</button>
-		<button data-val="helen" class="btn activist-btn">helen</button>
-		<button data-val="jim" class="btn activist-btn">jim</button>
-
-        <form id="form" method="get" action="index.php">
-            <input type="hidden" id="activist-name" name="activist-name" value="<?=$_GET['activist-name'] ?? ''?>" />
-        </form>
-        <div id="headline">
-            <?php
-            if(isset($_GET['activist-name']) && $_GET['activist-name'])
-                echo $_GET['activist-name'] . '\'s network';
-            ?>
-        </div>
-    </div>
-    </body>
-</html>
-
-<?php
-#Debug mode
-#ini_set('display_errors', 'off');
+#ini_set('display_errors', 'off');	#turn off Debug mode
+defined('CSS_PATH') or define ('CSS_PATH', 'assets/styles');
+defined('JS_PATH') or define ('JS_PATH', 'assets/scripts');
 
 #Autolad all classes found
 spl_autoload_register(function ($className) {
-	require_once '../' . str_replace("\\","/", $className) . '.php';    #$className example: test1\Action
+	require_once str_replace("\\","/", $className) . '.php';
 });
 
-$whales = new Action(1, 'Whales');
-$toxics = new Action(2, 'Toxics');
-$nukes	= new Action(3, 'Nukes');
-$climate= new Action(4, 'Climate');
-$ozon   = new Action (5, 'Ozon');
-
-$koyan = new Activist('koyan');
-$remy  = new Activist('remy');
-$bill  = new Activist('bill');
-$maria = new Activist('maria');
-$helen = new Activist('helen');
-$jim   = new Activist('jim');
-
-
-$koyan->signAction($whales);
-$remy->signAction($whales);
-$bill->signAction($whales);
-$bill->signAction($nukes);
-$maria->signAction($nukes);
-$maria->signAction($climate);
-$helen->signAction($climate);
-$helen->signAction($ozon);
-$jim->signAction($ozon);
-
+require_once 'views/home.php';
+(new NetworkController())->init();
 #Usage code
 if (isset($_GET['activist-name']))
 {
@@ -140,14 +57,4 @@ if (isset($_GET['activist-name']))
 	echo '<br /><a href=".">Clear</a>';
 }
 ?>
-
-<script type="application/javascript">
-  let form    = document.getElementById("form");
-  let input   = document.getElementById("activist-name");
-  let buttons = document.querySelectorAll(".activist-btn");
-
-  buttons.forEach(el => el.addEventListener('click', event => {
-	input.value = el.getAttribute("data-val");
-	form.submit();
-  }));
-</script>
+<script type="text/javascript" src="<?= JS_PATH ?>/main.js"></script>

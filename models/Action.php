@@ -1,12 +1,14 @@
 <?php
 
-namespace test1;
+namespace models;
 
 /**
+ * @package activistNetwork
+ *
  * Class Action
  */
-class Action {
-
+class Action
+{
     /** @var int */
 	protected $id;
 

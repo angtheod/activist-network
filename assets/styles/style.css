@@ -1,0 +1,25 @@
+#headline {margin-top: 20px; font-weight: bold; text-decoration: underline; font-size: 120%;}
+#error {display: inline-block; color: #7793bb;}
+#depth0 {color: #06bfe5;}
+#depth1 {color: #09a1e5;}
+#depth2 {color: #0283e5;}
+#depth3 {color: #0062e5;}
+#depth4 {color: #002ee5;}   /* We could use Sass here to have variable selectors and variable color values */
+
+.hoverable {
+    position: relative;
+}
+
+.hoverable >.hoverable__tooltip {
+    display: none;
+}
+
+.hoverable:hover > .hoverable__tooltip {
+    display: inline;
+    position: absolute;
+    left: 200px;
+    background: white;
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+}

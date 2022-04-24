@@ -1,8 +1,10 @@
 <?php
 
-namespace test1;
+namespace models;
 
 /**
+ * @package activistNetwork
+ *
  * Class Node
  */
 class Node
