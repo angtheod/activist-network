@@ -3,10 +3,10 @@
 namespace views;
 
 /**
- * Class Home
+ * Class Network
  * @package views
  */
-class Home extends View
+class Network extends View
 {
 
 }

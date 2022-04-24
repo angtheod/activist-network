@@ -1,11 +1,14 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: losangelos
- * Name: Angelos Theodorakopoulos
+ * @author Angelos Theodorakopoulos
  * Email: angtheod@gmail.com
- * Date: 4/5/2017
- * Time: 11:56 πμ
+ *
+ * @version 1.0
+ * Date: 04/05/2017
+ *
+ * @version 1.5
+ * Date: 24/04/2022
  */
 
 /*
@@ -37,10 +40,7 @@ defined('CSS_PATH') or define ('CSS_PATH', 'assets/styles/');
 defined('JS_PATH') or define ('JS_PATH', 'assets/scripts/');
 defined('TEMPLATES_PATH') or define ('TEMPLATES_PATH', 'templates/');
 
-#Autolad all classes found
-spl_autoload_register(function ($className) {
-	require_once str_replace("\\","/", $className) . '.php';
-});
+require_once 'autoload.php';
 
 (new Home())->view();
 (new NetworkController())->init();
