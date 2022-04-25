@@ -3,10 +3,10 @@
 namespace views;
 
 /**
- * Class Network
+ * Class Activist
  * @package views
  */
-class Network extends View
+class Activist extends View
 {
 
 }

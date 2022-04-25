@@ -31,30 +31,15 @@
 namespace activistNetwork;
 
 use controllers\NetworkController;
-use models\Activist;
-use models\ActivistNetwork;
 use views\Home;
 
-#ini_set('display_errors', 'off');	#turn off Debug mode
-defined('CSS_PATH') or define ('CSS_PATH', 'assets/styles/');
-defined('JS_PATH') or define ('JS_PATH', 'assets/scripts/');
-defined('TEMPLATES_PATH') or define ('TEMPLATES_PATH', 'templates/');
-
 require_once 'autoload.php';
-
 (new Home())->view();
-(new NetworkController())->init();
 
 if (isset($_GET['activist-name']))
 {
-	/** @var Activist $activist */
-	$activist = ${$_GET['activist-name']};          #Get the already instantiated activist object by using variable variable names
+	$activistName = $_GET['activist-name'];                                          //TODO - sanitize input
+	$data = json_decode(file_get_contents(DATA_FILE), true);      //Read data from file
 
-	try {
-		$network = new ActivistNetwork( $activist );
-		$network->view();
-	} catch ( \Exception $e ) {
-		echo '<div id="error">' . $e->getMessage() . '</div>';
-	}
-	echo '<br /><a href=".">Clear</a>';
+	(new NetworkController($activistName, $data['actions'], $data['activists'], $data['signed-actions']));
 }

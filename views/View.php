@@ -13,6 +13,6 @@ class View
 	 */
 	public function view()
 	{
-		require_once TEMPLATES_PATH . lcfirst( (new \ReflectionClass($this))->getShortName() ) . '.html';
+		require TEMPLATES_PATH . lcfirst( (new \ReflectionClass($this))->getShortName() ) . '.php';
 	}
 }

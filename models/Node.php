@@ -8,46 +8,46 @@ namespace models;
  */
 class Node
 {
-    /**
-     * @var
-     */
-    public $id;
-    /**
-     * @var Node
-     */
+    /** @var int */
+    protected $id;
+
+    /** @var Node */
     protected $_parent;
-    /**
-     * @var array
-     */
+
+    /** @var array */
     protected $_children = array();
 
     /**
      * Node constructor.
      *
-     * @param $id
+     * @param int $id
      */
-    function __construct($id) {
+    public function __construct(int $id)
+    {
         $this->id = $id;
     }
 
     /**
      * @param Node $parent
      */
-    public function setParent(Node $parent) {
+    public function setParent(Node $parent)
+    {
         $this->_parent = $parent;
     }
 
     /**
-     * @return Node
+     * @return Node|null
      */
-    public function getParent() {
+    public function getParent(): ?Node
+    {
         return $this->_parent;
     }
 
     /**
      * @param Node $child
      */
-    public function setChild(Node $child) {
+    public function setChild(Node $child)
+    {
         if(!empty($child))
             $this->_children[] = $child;
     }
@@ -55,7 +55,16 @@ class Node
     /**
      * @return array
      */
-    public function getChildren() {
+    public function getChildren(): array
+    {
         return $this->_children;
     }
+
+	/**
+	 * @return int
+	 */
+	public function getId(): int
+	{
+		return $this->id;
+	}
 }

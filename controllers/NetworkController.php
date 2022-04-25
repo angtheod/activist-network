@@ -4,6 +4,7 @@ namespace controllers;
 
 use models\Action;
 use models\Activist;
+use models\ActivistNetwork;
 
 /**
  * Class NetworkController
@@ -11,58 +12,70 @@ use models\Activist;
  */
 class NetworkController
 {
+	/** @var Action[] */
+	protected $actions = [];
+
+	/** @var Activist[] */
+	protected $activists = [];
+
 	/**
+	 * NetworkController constructor.
 	 *
+	 * @param string $name
+	 * @param Action[] $actions
+	 * @param Activist[] $activists
+	 * @param array $signedActions
 	 */
-	public function init()
+	public function __construct(string $name, $actions = [], $activists = [], $signedActions = [])
 	{
-		$whales = new Action(1, 'Whales');
-		$toxics = new Action(2, 'Toxics');
-		$nukes	= new Action(3, 'Nukes');
-		$climate= new Action(4, 'Climate');
-		$ozon   = new Action (5, 'Ozon');
+		$this->init($actions, $activists, $signedActions);
 
-		$koyan = new Activist('koyan');
-		$remy  = new Activist('remy');
-		$bill  = new Activist('bill');
-		$maria = new Activist('maria');
-		$helen = new Activist('helen');
-		$jim   = new Activist('jim');
+		$activist = $this->activists[$name];
 
-		$koyan->signAction($whales);
-		$remy->signAction($whales);
-		$bill->signAction($whales);
-		$bill->signAction($nukes);
-		$maria->signAction($nukes);
-		$maria->signAction($climate);
-		$helen->signAction($climate);
-		$helen->signAction($ozon);
-		$jim->signAction($ozon);
-
-		$this->registerActions();
-		$this->registerActivists();
-		$this->signActions();
+		try {
+			$network = new ActivistNetwork($activist);
+			$network->view();
+		} catch (\Exception $e) {
+			echo '<div id="error">' . $e->getMessage() . '</div>';
+		}
 	}
 
 	/**
-	 *
+	 * @param array $actions
+	 * @param array $activists
+	 * @param array $signedActions
 	 */
-	protected function registerActions()
+	public function init($actions = [], $activists = [], $signedActions = [])
 	{
-
+		$this->registerActions($actions);
+		$this->registerActivists($activists);
+		$this->signActions($signedActions);
 	}
 
 	/**
-	 *
+	 * @param array $actions
 	 */
-	protected function registerActivists() {
-
+	protected function registerActions($actions = [])
+	{
+		foreach ($actions as $action)
+			$this->actions[$action['name']] = new Action($action['id'], $action['name']);
 	}
 
 	/**
-	 *
+	 * @param array $activists
 	 */
-	protected function signActions() {
+	protected function registerActivists($activists = [])
+	{
+		foreach ($activists as $activist)
+			$this->activists[$activist['name']] = new Activist($activist['id'], $activist['name']);
+	}
 
+	/**
+	 * @param array $signedActions
+	 */
+	protected function signActions($signedActions = [])
+	{
+		foreach ($signedActions as $signedAction)
+			$this->activists[$signedAction[0]]->signAction($this->actions[$signedAction[1]]);
 	}
 }
