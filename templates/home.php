@@ -28,6 +28,7 @@
 				echo $_GET['activist-name'] . '\'s network';
 		?>
 	</div>
+	<small>(hover name to see signed actions)</small>
 
 	<form id="form" method="get" action="index.php">
 		<input type="hidden" id="activist-name" name="activist-name" value="<?= $_GET['activist-name'] ?? '' ?>" />

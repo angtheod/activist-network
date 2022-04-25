@@ -49,8 +49,17 @@ class Node
     public function setChild(Node $child)
     {
         if(!empty($child))
-            $this->_children[] = $child;
+            $this->_children[$child->id] = $child;
     }
+
+	/**
+	 * @param Node $child
+	 * @return bool
+	 */
+	public function isParentOf(Node $child): bool
+	{
+		return isset($this->_children[$child->id]);
+	}
 
     /**
      * @return array

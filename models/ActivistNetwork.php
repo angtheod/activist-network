@@ -52,11 +52,11 @@ class ActivistNetwork extends Network
         #For each signed action get the co-signed activists network and add them as children to the current activists node
         /** @var Action $action */
         foreach ($signedActions as $action) {
-
             $signedActivists = $action->getSigningActivists();
 
             foreach ($signedActivists as $signedActivist)
-                if($activist->getId() !== $signedActivist->getId())     //Skip self
+                if ($activist->getId() !== $signedActivist->getId()     //Skip self
+                   && !$activist->isParentOf($signedActivist))          //Skip already added child
                     $this->addChild($signedActivist, $activist);
         }
 
