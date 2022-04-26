@@ -28,13 +28,11 @@ class NetworkController
 	 */
 	public function __construct(string $name, $actions = [], $activists = [], $signedActions = [])
 	{
-		$this->init($actions, $activists, $signedActions);
-
-		$activist = $this->activists[$name];
+		$this->init($actions, $activists, $signedActions);              //Initialize network by creating all the nodes and their relations
+		$activist = $this->activists[$this->sanitize($name)];           //Sanitize form's input
 
 		try {
-			$network = new ActivistNetwork($activist);
-			$network->view();
+			(new ActivistNetwork($activist))->view();
 		} catch (\Exception $e) {
 			echo '<div id="error">' . $e->getMessage() . '</div>';
 		}
@@ -58,7 +56,8 @@ class NetworkController
 	protected function registerActions($actions = [])
 	{
 		foreach ($actions as $action)
-			$this->actions[$action['name']] = new Action($action['id'], $action['name']);
+			if (is_int($action['id']))
+				$this->actions[$action['name']] = new Action($action['id'], $action['name']);
 	}
 
 	/**
@@ -67,7 +66,8 @@ class NetworkController
 	protected function registerActivists($activists = [])
 	{
 		foreach ($activists as $activist)
-			$this->activists[$activist['name']] = new Activist($activist['id'], $activist['name']);
+			if (is_int($activist['id']))
+				$this->activists[$activist['name']] = new Activist($activist['id'], $activist['name']);
 	}
 
 	/**
@@ -77,5 +77,16 @@ class NetworkController
 	{
 		foreach ($signedActions as $signedAction)
 			$this->activists[$signedAction[0]]->signAction($this->actions[$signedAction[1]]);
+	}
+
+	/**
+	 * Sanitize form input
+	 *
+	 * @param string $name
+	 * @return string
+	 */
+	protected function sanitize($name): string
+	{
+		return htmlspecialchars(strip_tags(filter_var($name, FILTER_SANITIZE_STRING)));
 	}
 }

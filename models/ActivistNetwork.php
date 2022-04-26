@@ -9,20 +9,6 @@ namespace models;
 class ActivistNetwork extends Network
 {
     /**
-     * ActivistNetwork constructor.
-     *
-     * @param Activist|null $root
-     * @throws \Exception
-     */
-    public function __construct(Activist $root = null)
-    {
-        if(!$root instanceof Activist)
-            throw new \Exception('Enter an existing activist\'s name to view his/her network.');
-
-        parent::__construct($root);
-    }
-
-    /**
      * Fill the current activist's network tree
      *
      * @param Activist|null $activist
@@ -83,7 +69,10 @@ class ActivistNetwork extends Network
         if(!$activist instanceof Activist)
             throw new \Exception('An activist\'s name to view his/her network is required.');
 
-	    require TEMPLATES_PATH . 'activist.php';
+	    (new \views\Activist())->view([
+	    	'activist' => $activist,
+		    'depth'    => $depth
+	    ]);
 
         if($children = $activist->getChildren()) {
             $depth++;
@@ -92,5 +81,14 @@ class ActivistNetwork extends Network
             $depth--;
         }
         echo '</ul>';
+    }
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function validate($activist)
+    {
+	    if(!$activist instanceof Activist)
+            throw new \Exception('Enter an existing activist\'s name to view his/her network.');
     }
 }

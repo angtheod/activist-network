@@ -20,10 +20,9 @@ abstract class Network
      * @param Node $root
      * @throws \Exception
      */
-    public function __construct(Node $root) {
-        if(!$root instanceof Node)
-            throw new \Exception('A root node for the network is required.');
-
+    public function __construct($root)
+    {
+	    $this->validate($root);             //Validate form's data
         $this->_root = $root;
         $this->_hashTable[$this->_root->getId()] = $this->_root;
         $this->fill();
@@ -69,6 +68,17 @@ abstract class Network
     {
         if($child)
             $child->setParent($parent);
+    }
+
+	/**
+	 * @param $node
+	 *
+	 * @throws \Exception
+	 */
+    public function validate($node)
+    {
+	    if(!$node instanceof Node)
+		    throw new \Exception('A root node for the network is required.');
     }
 
     /**

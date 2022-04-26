@@ -1,6 +1,5 @@
 <?php
 
-//ini_set('display_errors', 'off');	#turn off Debug mode
 defined('TEMPLATES_PATH') or define ('TEMPLATES_PATH', 'templates/');
 defined('DATA_FILE') or define ('DATA_FILE', 'data.json');
 defined('CSS_PATH') or define ('CSS_PATH', 'assets/styles/');
