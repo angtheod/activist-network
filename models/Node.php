@@ -12,10 +12,10 @@ class Node
     protected $id;
 
     /** @var Node */
-    protected $_parent;
+    protected $parent;
 
     /** @var array */
-    protected $_children = array();
+    protected $children = array();
 
     /**
      * Node constructor.
@@ -32,7 +32,7 @@ class Node
      */
     public function setParent(Node $parent)
     {
-        $this->_parent = $parent;
+        $this->parent = $parent;
     }
 
     /**
@@ -40,7 +40,7 @@ class Node
      */
     public function getParent(): ?Node
     {
-        return $this->_parent;
+        return $this->parent;
     }
 
     /**
@@ -48,32 +48,33 @@ class Node
      */
     public function setChild(Node $child)
     {
-        if(!empty($child))
-            $this->_children[$child->id] = $child;
+        if (!empty($child)) {
+            $this->children[$child->id] = $child;
+        }
     }
 
-	/**
-	 * @param Node $child
-	 * @return bool
-	 */
-	public function isParentOf(Node $child): bool
-	{
-		return isset($this->_children[$child->id]);
-	}
+    /**
+     * @param Node $child
+     * @return bool
+     */
+    public function isParentOf(Node $child): bool
+    {
+        return isset($this->children[$child->id]);
+    }
 
     /**
      * @return array
      */
     public function getChildren(): array
     {
-        return $this->_children;
+        return $this->children;
     }
 
-	/**
-	 * @return int
-	 */
-	public function getId(): int
-	{
-		return $this->id;
-	}
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }

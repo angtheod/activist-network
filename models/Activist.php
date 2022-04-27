@@ -8,56 +8,59 @@ namespace models;
  */
 class Activist extends Node
 {
-	/** @var string */
-	protected $name;
+    /** @var string */
+    protected $name;
 
     /** @var Action[]  */
     public $actions = array();
 
-	/**
-	 * Activist constructor.
-	 *
-	 * @param int    $id
-	 * @param string $name
-	 */
+    /**
+     * Activist constructor.
+     *
+     * @param int    $id
+     * @param string $name
+     */
     public function __construct(int $id, string $name)
     {
-	    parent::__construct( $id );
-	    $this->name = $name;
+        parent::__construct($id);
+        $this->name = $name;
     }
 
-	/**
+    /**
      * @param Action $action
      */
-    public function signAction(Action $action) {
+    public function signAction(Action $action)
+    {
         $this->actions[] = $action;
-        $action->activistSigned($this);
+        $action->signedBy($this);
     }
 
     /**
      * @return array
      */
-	public function getSignedActions(): array {
+    public function getSignedActions(): array
+    {
         return $this->actions;
     }
 
-	/**
-	 * @return array
-	 */
-	public function getSignedActionsNames(): array {
-		$names = [];
-		foreach ($this->actions as $action) {
-			$names[] = $action->getName();
-		}
+    /**
+     * @return array
+     */
+    public function getSignedActionsNames(): array
+    {
+        $names = [];
+        foreach ($this->actions as $action) {
+            $names[] = $action->getName();
+        }
 
-		return $names;
-	}
+        return $names;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getName(): string
-	{
-		return $this->name;
-	}
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

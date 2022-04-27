@@ -9,10 +9,10 @@ namespace models;
 class Action
 {
     /** @var int */
-	protected $id;
+    protected $id;
 
-	/** @var string */
-	protected $name;
+    /** @var string */
+    protected $name;
 
     /** @var array */
     public $activists = array();
@@ -23,7 +23,8 @@ class Action
      * @param int    $id
      * @param string $name
      */
-    function __construct($id, $name){
+    public function __construct($id, $name)
+    {
         $this->id   = $id;
         $this->name = $name;
     }
@@ -31,42 +32,48 @@ class Action
     /**
      * @param Activist $activist
      */
-    function activistSigned(Activist $activist) {
+    public function signedBy(Activist $activist)
+    {
         $this->activists[] = $activist;
     }
 
     /**
      * @return array
      */
-    function getSigningActivists(): array {
+    public function getSigningActivists(): array
+    {
         return $this->activists;
     }
 
-	/**
-	 * @param int $id
-	 */
-	public function setId($id) {
-		$this->id = $id;
-	}
-
-	/**
-	 * @param string $name
-	 */
-	public function setName($name) {
-		$this->name = $name;
-	}
-
-	/**
-	 * @return int
-	 */
-    public function getId(): int {
-    	return $this->id;
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
-	/**
-	 * @return string
-	 */
-    public function getName(): string {
-    	return $this->name;
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

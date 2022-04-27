@@ -9,10 +9,10 @@ namespace models;
 abstract class Network
 {
     /** @var Node */
-    protected $_root;
+    protected $root;
 
     /** @var array */
-    protected $_hashTable = array();      #Hash table that will contain all the nodes of this network
+    protected $hashTable = array();      #Hash table that will contain all the nodes of this network
 
     /**
      * Network constructor.
@@ -22,9 +22,9 @@ abstract class Network
      */
     public function __construct($root)
     {
-	    $this->validate($root);             //Validate form's data
-        $this->_root = $root;
-        $this->_hashTable[$this->_root->getId()] = $this->_root;
+        $this->validate($root);             //Validate form's data
+        $this->root = $root;
+        $this->hashTable[$this->root->getId()] = $this->root;
         $this->fill();
     }
 
@@ -37,13 +37,15 @@ abstract class Network
      */
     public function addChild(Node $child, Node $parent = null): int
     {
-        if(!$child instanceof Node)
+        if (!$child instanceof Node) {
             throw new \Exception('A child node is required.');
+        }
 
-        if(!$parent)
-            $parent = $this->_root;
+        if (!$parent) {
+            $parent = $this->root;
+        }
 
-        $this->_hashTable[$parent->getId()] = $child;
+        $this->hashTable[$parent->getId()] = $child;
         $this->setChild($parent, $child);
         $this->setParent($child, $parent);
 
@@ -56,8 +58,9 @@ abstract class Network
      */
     public function setChild(Node $parent, Node $child)
     {
-        if($parent)
+        if ($parent) {
             $parent->setChild($child);
+        }
     }
 
     /**
@@ -66,19 +69,21 @@ abstract class Network
      */
     public function setParent(Node $child, Node $parent)
     {
-        if($child)
+        if ($child) {
             $child->setParent($parent);
+        }
     }
 
-	/**
-	 * @param $node
-	 *
-	 * @throws \Exception
-	 */
+    /**
+     * @param $node
+     *
+     * @throws \Exception
+     */
     public function validate($node)
     {
-	    if(!$node instanceof Node)
-		    throw new \Exception('A root node for the network is required.');
+        if (!$node instanceof Node) {
+            throw new \Exception('A root node for the network is required.');
+        }
     }
 
     /**
@@ -86,10 +91,10 @@ abstract class Network
      *
      * @param Node|null $node
      */
-    abstract function fill (Node $node = null);
+    abstract function fill(Node $node = null);
 
     /**
      * @param Node|null $node
      */
-    abstract function view (Node $node = null);
+    abstract function view(Node $node = null);
 }
