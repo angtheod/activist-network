@@ -12,7 +12,8 @@
     {"id": 3, "name": "Bill"},
     {"id": 4, "name": "Maria"},
     {"id": 5, "name": "Helen"},
-    {"id": 6, "name": "Jim"}
+    {"id": 6, "name": "Jim"},
+    {"id": 7, "name": "Angelo"}
   ],
   "signed-actions": [
     ["Kyle", "Whales"],
@@ -24,6 +25,7 @@
     ["Helen", "Climate"],
     ["Helen", "Ozon"],
     ["Jim", "Ozon"],
-    ["Jim", "Climate"]
+    ["Jim", "Climate"],
+    ["Angelo", "Nukes"]
   ]
 }
