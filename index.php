@@ -15,15 +15,7 @@
 namespace activistNetwork;
 
 use controllers\NetworkController;
-use views\Home;
 
-ini_set('display_errors', 'off');    #turn off Debug mode
 require_once 'autoload.php';
-
-(new Home())->view();
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['activist-name'])) {
-    $activistName = $_GET['activist-name'];
-    $data = json_decode(file_get_contents(DATA_FILE), true);      //Read data from file
-
-    (new NetworkController($activistName, $data['actions'], $data['activists'], $data['signed-actions']));
-}
+ini_set('display_errors', DISPLAY_ERRORS);                               #set Debug mode
+(new NetworkController($_GET['activist-name'] ?? '', DATA_JSON));

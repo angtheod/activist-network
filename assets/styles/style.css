@@ -6,20 +6,28 @@
 #depth3 {color: #0062e5;}
 #depth4 {color: #002ee5;}   /* We could use Sass here to have variable selectors and variable color values */
 
-.hoverable {
-    position: relative;
+.activist-btn {
+    background: black;
+    color: white;
+    font-weight: bold;
 }
 
-.hoverable >.hoverable__tooltip {
+.hoverable {
+    position: relative;
+    width: 10%;
+}
+
+.hoverable > .hoverable__tooltip {
     display: none;
 }
 
 .hoverable:hover > .hoverable__tooltip {
     display: inline;
     position: absolute;
-    left: 200px;
-    background: white;
-    color: black;
-    border: 1px solid black;
-    border-radius: 5px;
+    left: 150px;
+    padding: 10px;
+    font-weight: bold;
+    background: #1a49c1;
+    color: white;
+    border-radius: 10px;
 }

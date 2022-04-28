@@ -29,7 +29,7 @@ class Activist extends Node
     /**
      * @param Action $action
      */
-    public function signAction(Action $action)
+    public function sign(Action $action)
     {
         $this->actions[] = $action;
         $action->signedBy($this);

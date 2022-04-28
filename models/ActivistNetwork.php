@@ -2,27 +2,91 @@
 
 namespace models;
 
+use views\Home;
+
 /**
  * Class ActivistNetwork
  * @package models
  */
 class ActivistNetwork extends Network
 {
+    /** @var Action[] */
+    protected $actions = [];
+
+    /** @var Activist[] */
+    protected $activists = [];
+
+    /**
+     * {@inheritDoc}
+     */
+    public function init($activistName, $fileName)
+    {
+        parent::init($activistName, $fileName);
+        $this->createActions($this->data['actions']);
+        $this->createActivists($this->data['activists']);
+        $this->signActions($this->data['signed-actions']);
+        if ($activistName) {
+            $this->root = $this->activists[$activistName];
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function validate($activist)
+    {
+        if (!$activist instanceof Activist) {
+            throw new \Exception('Click on an existing activist\'s name to view his/her network.');
+        }
+    }
+
+    /**
+     * @param array $actions
+     */
+    protected function createActions($actions = [])
+    {
+        foreach ($actions as $action) {
+            if (is_int($action['id'])) {
+                $this->actions[$action['name']] = new Action($action['id'], $action['name']);
+            }
+        }
+    }
+
+    /**
+     * @param array $activists
+     */
+    protected function createActivists($activists = [])
+    {
+        foreach ($activists as $activist) {
+            if (is_int($activist['id'])) {
+                $this->activists[$activist['name']] = new Activist($activist['id'], $activist['name']);
+            }
+        }
+    }
+
+    /**
+     * @param array $signedActions
+     */
+    protected function signActions($signedActions = [])
+    {
+        foreach ($signedActions as $signedAction) {
+            $this->activists[$signedAction[0]]->sign($this->actions[$signedAction[1]]);
+        }
+    }
+
     /**
      * Fill the current activist's network tree
      *
      * @param Activist|null $activist
      * @throws \Exception
      */
-    public function fill($activist = null)
+    protected function fill($activist = null)
     {
         if (!$activist) {
+            if (!$this->root) {
+                return;
+            }
             $activist = $this->root;
-        }
-
-        #The first time we start with the root activist
-        if (!$activist instanceof Activist) {
-            throw new \Exception('An activist\'s name to fill his/her network is required.');
         }
 
         #Get current activist's signed actions
@@ -66,12 +130,29 @@ class ActivistNetwork extends Network
      * @param Activist|null $activist
      * @throws \Exception
      */
+    public function viewHome()
+    {
+        (new Home())->view([
+            'activistName' => $this->root ? $this->root->getName() : '',
+            'activists'    => $this->data['activists']
+        ]);
+    }
+
+    /**
+     * View the current activist's network tree
+     *
+     * @param Activist|null $activist
+     * @throws \Exception
+     */
     public function view($activist = null)
     {
         static $depth = 0;
 
         #The first time we start with the root activist
         if (!$activist) {
+            if (!$this->root) {
+                return;
+            }
             $activist = $this->root;
         }
 
@@ -92,15 +173,5 @@ class ActivistNetwork extends Network
             $depth--;
         }
         echo '</ul>';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function validate($activist)
-    {
-        if (!$activist instanceof Activist) {
-            throw new \Exception('Enter an existing activist\'s name to view his/her network.');
-        }
     }
 }

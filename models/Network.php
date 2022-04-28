@@ -9,23 +9,57 @@ namespace models;
 abstract class Network
 {
     /** @var Node */
-    protected $root;
+    protected $root;                        //Root node of the network
 
     /** @var array */
-    protected $hashTable = array();      #Hash table that will contain all the nodes of this network
+    protected $hashTable = array();         //Hash table that will contain all the nodes of this network
+
+    /** @var array */
+    protected $data = array();              //Contains all the data read from the data source (file)
 
     /**
      * Network constructor.
      *
-     * @param Node $root
+     * @param string $activistName
+     * @param string $fileName
      * @throws \Exception
      */
-    public function __construct($root)
+    public function __construct(string $activistName, string $fileName)
     {
-        $this->validate($root);             //Validate form's data
-        $this->root = $root;
-        $this->hashTable[$this->root->getId()] = $this->root;
-        $this->fill();
+        $this->init($activistName, $fileName);
+        try {
+            $this->validate($this->root);       //Validate Node
+            if ($this->root) {
+                $this->hashTable[$this->root->getId()] = $this->root;
+                $this->fill();
+            }
+        } catch (\Exception $e) {
+            echo '<div id="error">' . $e->getMessage() . '</div>';
+        }
+    }
+
+    /**
+     * Initialize network by reading data source and create respective nodes and their relations
+     *
+     * @param string $activistName
+     * @param string $fileName
+     * @return void
+     */
+    public function init($activistName, $fileName)
+    {
+        $this->readData($fileName);
+    }
+
+    /**
+     * @param $node
+     *
+     * @throws \Exception
+     */
+    protected function validate($node)
+    {
+        if (!$node instanceof Node) {
+            throw new \Exception('Invalid node.');
+        }
     }
 
     /**
@@ -35,7 +69,7 @@ abstract class Network
      * @return int
      * @throws \Exception
      */
-    public function addChild(Node $child, Node $parent = null): int
+    public function addChild($child, $parent = null): int
     {
         if (!$child instanceof Node) {
             throw new \Exception('A child node is required.');
@@ -56,7 +90,7 @@ abstract class Network
      * @param Node $parent
      * @param Node $child
      */
-    public function setChild(Node $parent, Node $child)
+    public function setChild($parent, $child)
     {
         if ($parent) {
             $parent->setChild($child);
@@ -67,7 +101,7 @@ abstract class Network
      * @param Node $child
      * @param Node $parent
      */
-    public function setParent(Node $child, Node $parent)
+    public function setParent($child, $parent)
     {
         if ($child) {
             $child->setParent($parent);
@@ -75,14 +109,17 @@ abstract class Network
     }
 
     /**
-     * @param $node
+     * Read data from file (json, csv)
      *
-     * @throws \Exception
+     * @param string $fileName
      */
-    public function validate($node)
+    protected function readData(string $fileName)
     {
-        if (!$node instanceof Node) {
-            throw new \Exception('A root node for the network is required.');
+        $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+        if ($extension === 'json') {
+            $this->data = json_decode(file_get_contents($fileName), true);      //Read data from json file
+        } elseif ($extension === 'csv') {
+            $this->data = array_map('str_getcsv', file($fileName));              //Read data from csv file
         }
     }
 
@@ -91,10 +128,10 @@ abstract class Network
      *
      * @param Node|null $node
      */
-    abstract function fill(Node $node = null);
+    abstract protected function fill(Node $node = null);
 
     /**
      * @param Node|null $node
      */
-    abstract function view(Node $node = null);
+    abstract public function view(Node $node = null);
 }
