@@ -12,7 +12,7 @@ $activist = $data['activist'];
 $depth    = $data['depth'];
 ?>
 <ul>
-    <li id="depth<?= $depth ?>" class="hoverable">
-        <span class="hoverable__main"><?= $activist->getName() ?></span> (<?= $depth ?>)
-        <span class="hoverable__tooltip"><?= implode('<br />', $activist->getSignedActionsNames()) ?></span>
+    <li class="hoverable">
+        <div id="depth<?= $depth ?>" class="hoverable__main sticky"><?= htmlspecialchars($activist->getName()) ?> (<?= $depth ?>)</div>
+        <div class="hoverable__tooltip"><?= implode(', ', array_map('htmlspecialchars', $activist->getSignedActionsNames())) ?></div>
     </li>

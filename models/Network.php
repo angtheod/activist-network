@@ -29,10 +29,8 @@ abstract class Network
         $this->init($activistName, $fileName);
         try {
             $this->validate($this->root);       //Validate Node
-            if ($this->root) {
-                $this->hashTable[$this->root->getId()] = $this->root;
-                $this->fill();
-            }
+            $this->hashTable[$this->root->getId()] = $this->root;
+            $this->fill();
         } catch (\Exception $e) {
             echo '<div id="error">' . $e->getMessage() . '</div>';
         }

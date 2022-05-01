@@ -127,7 +127,6 @@ class ActivistNetwork extends Network
     /**
      * View the current activist's network tree
      *
-     * @param Activist|null $activist
      * @throws \Exception
      */
     public function viewHome()
@@ -150,14 +149,11 @@ class ActivistNetwork extends Network
 
         #The first time we start with the root activist
         if (!$activist) {
+			echo '<ul class="tree">';
             if (!$this->root) {
                 return;
             }
             $activist = $this->root;
-        }
-
-        if (!$activist instanceof Activist) {
-            throw new \Exception('An activist\'s name to view his/her network is required.');
         }
 
         (new \views\Activist())->view([

@@ -8,5 +8,4 @@ namespace views;
  */
 class Activist extends View
 {
-
 }

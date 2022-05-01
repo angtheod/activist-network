@@ -4,7 +4,7 @@
  * @var array $data
  */
 
-$activistName = $data['activistName'];
+$activistName = htmlspecialchars($data['activistName']);
 $activists    = $data['activists'];
 ?>
 <!DOCTYPE html>
@@ -21,8 +21,9 @@ $activists    = $data['activists'];
 <body>
 <br />
 <div id="section">
-    <?php foreach ($activists as $activist) { ?>
-        <button data-val="<?= $activist['name'] ?>" class="btn activist-btn"><?= $activist['name'] ?></button>
+    <?php foreach ($activists as $activist) {
+        $name = htmlspecialchars($activist['name']); ?>
+        <button data-val="<?= $name ?>" class="btn activist-btn"><?= $name ?></button>
     <?php } ?>
     <a href=".">Clear</a><br />
 
