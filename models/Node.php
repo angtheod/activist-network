@@ -30,7 +30,7 @@ class Node
     /**
      * @param Node $parent
      */
-    public function setParent(Node $parent)
+    public function setParent(Node $parent): void
     {
         $this->parent = $parent;
     }
@@ -46,7 +46,7 @@ class Node
     /**
      * @param Node $child
      */
-    public function setChild(Node $child)
+    public function setChild(Node $child): void
     {
         if (!empty($child)) {
             $this->children[$child->id] = $child;
@@ -59,6 +59,7 @@ class Node
      */
     public function isParentOf(Node $child): bool
     {
+		//TODO - check if this is correct
         return isset($this->children[$child->id]);
     }
 

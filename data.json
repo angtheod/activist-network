@@ -24,8 +24,9 @@
     ["Maria", "Climate"],
     ["Helen", "Climate"],
     ["Helen", "Ozon"],
-    ["Jim", "Ozon"],
     ["Jim", "Climate"],
-    ["Angelo", "Nukes"]
+    ["Angelo", "Nukes"],
+    ["Jim", "Ozon"],
+    ["Remy", "Ozon"]
   ]
 }

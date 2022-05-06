@@ -19,7 +19,7 @@ class ActivistNetwork extends Network
     /**
      * {@inheritDoc}
      */
-    public function init($activistName, $fileName)
+    public function init($activistName, $fileName): void
     {
         parent::init($activistName, $fileName);
         $this->createActions($this->data['actions']);
@@ -33,7 +33,7 @@ class ActivistNetwork extends Network
     /**
      * {@inheritDoc}
      */
-    protected function validate($activist)
+    protected function validate($activist): void
     {
         if (!$activist instanceof Activist) {
             throw new \Exception('Click on an existing activist\'s name to view his/her network.');
@@ -108,8 +108,8 @@ class ActivistNetwork extends Network
 
             foreach ($signedActivists as $signedActivist) {
                 if (
-                    $activist->getId() !== $signedActivist->getId()     //Skip self
-                    && !$activist->isParentOf($signedActivist)          //Skip already added child
+                    $activist->getId() !== $signedActivist->getId()   //Skip self
+                    && !$this->contains($signedActivist)              //Skip if signedActivist already exists in subtree
                 ) {
                     $this->addChild($signedActivist, $activist);
                 }
@@ -149,7 +149,7 @@ class ActivistNetwork extends Network
 
         #The first time we start with the root activist
         if (!$activist) {
-			echo '<ul class="tree">';
+            echo '<ul class="tree">';
             if (!$this->root) {
                 return;
             }

@@ -3,9 +3,10 @@
 #depth0 {background-color: #06bfe5; color: white}
 #depth1 {background-color: #09a1e5; color: white}
 #depth2 {background-color: #0283e5; color: white}
-#depth3 {background-color: #0062e5; color: white}
-#depth4 {background-color: #002ee5; color: white}
-#depth5 {background-color: #0024be; color: white}   /* We could use Sass here to have variable selectors and variable color values */
+#depth3 {background-color: #0061e1; color: white}
+#depth4 {background-color: #012ac7; color: white}
+#depth5 {background-color: #011c93; color: white}
+#depth6 {background-color: #001a7a; color: white}   /* We could use Sass here to have variable selectors and variable color values */
 
 .activist-btn {
     background: black;

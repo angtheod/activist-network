@@ -20,7 +20,7 @@ Implementation
 We will implement this by using a HashTable.
 The HashTable has the activist name as key and the activist object as node.
 Each node has parent node (except for the root node) and possibly children nodes.
-Tested with php 7.3.33
+Tested with php 7.3.33 and 8.1.5
 
 Notes
 ---------------------------

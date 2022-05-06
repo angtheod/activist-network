@@ -43,7 +43,7 @@ abstract class Network
      * @param string $fileName
      * @return void
      */
-    public function init($activistName, $fileName)
+    public function init($activistName, $fileName): void
     {
         $this->readData($fileName);
     }
@@ -53,7 +53,7 @@ abstract class Network
      *
      * @throws \Exception
      */
-    protected function validate($node)
+    protected function validate($node): void
     {
         if (!$node instanceof Node) {
             throw new \Exception('Invalid node.');
@@ -88,7 +88,7 @@ abstract class Network
      * @param Node $parent
      * @param Node $child
      */
-    public function setChild($parent, $child)
+    public function setChild($parent, $child): void
     {
         if ($parent) {
             $parent->setChild($child);
@@ -99,7 +99,7 @@ abstract class Network
      * @param Node $child
      * @param Node $parent
      */
-    public function setParent($child, $parent)
+    public function setParent($child, $parent): void
     {
         if ($child) {
             $child->setParent($parent);
@@ -107,11 +107,21 @@ abstract class Network
     }
 
     /**
+     * @param Node $node
+     *
+     * @return bool
+     */
+    public function contains($node): bool
+    {
+        return isset($this->hashTable[$node->getId()]);
+    }
+
+    /**
      * Read data from file (json, csv)
      *
      * @param string $fileName
      */
-    protected function readData(string $fileName)
+    protected function readData(string $fileName): void
     {
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
         if ($extension === 'json') {
