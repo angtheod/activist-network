@@ -13,7 +13,7 @@ class View
      *
      * @param array $data
      */
-    public function view($data = [])
+    public function view($data = []): void
     {
         require TEMPLATES_PATH . lcfirst((new \ReflectionClass($this))->getShortName()) . '.php';
     }

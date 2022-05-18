@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 class ActivistTest extends TestCase
 {
     /**
+     * @covers Activist::getSignedActions
      * @return void
      */
     public function testGetSignedActions()
@@ -19,6 +20,7 @@ class ActivistTest extends TestCase
     }
 
     /**
+     * @covers Activist::sign
      * @return void
      */
     public function testSign()
@@ -26,6 +28,7 @@ class ActivistTest extends TestCase
     }
 
     /**
+     * @covers Activist::getSignedActionsNames
      * @return void
      */
     public function testGetSignedActionsNames()

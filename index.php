@@ -15,7 +15,14 @@
 namespace activistNetwork;
 
 use controllers\NetworkController;
+use models\ActivistNetwork;
 
 require_once 'autoload.php';
-ini_set('display_errors', DISPLAY_ERRORS);                               #set Debug mode
-(new NetworkController($_GET['activist-name'] ?? '', DATA_JSON));
+ini_set('display_errors', DISPLAY_ERRORS);                           //Set Debug mode
+
+(new NetworkController(
+    new ActivistNetwork(
+        NetworkController::sanitizeStringSt($_GET['activist-name'] ?? ''),    //Sanitize input and pass to model
+        DATA_FILE
+    )
+));

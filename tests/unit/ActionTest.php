@@ -11,8 +11,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ActionTest extends TestCase
 {
-    /*
-     *
+    /**
+     * @covers Action::signedBy
+     * @return void
      */
     public function testSignedBy()
     {
@@ -20,6 +21,7 @@ class ActionTest extends TestCase
     }
 
     /**
+     * @covers Action::getSigningActivists
      * @return void
      */
     public function testGetSigningActivists()

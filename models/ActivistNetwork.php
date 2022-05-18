@@ -126,6 +126,7 @@ class ActivistNetwork extends Network
 
     /**
      * View the current activist's network tree
+     * TODO - Needs to be moved. This shouldn't be Network's responsibility
      *
      * @throws \Exception
      */

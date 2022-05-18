@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class ActivistNetworkTest extends TestCase
 {
     /**
-     * Tests ActivistNetwork::createActions
+     * @covers ActivistNetwork::createActions
      */
     public function testCreateActions()
     {
@@ -21,7 +21,7 @@ class ActivistNetworkTest extends TestCase
     }
 
     /**
-     * Tests ActivistNetwork::createActivists
+     * @covers ActivistNetwork::createActivists
      */
     public function testCreateActivists()
     {
@@ -30,7 +30,7 @@ class ActivistNetworkTest extends TestCase
     }
 
     /**
-     * Tests ActivistNetwork::signActions
+     * @covers ActivistNetwork::signActions
      */
     public function testSignActions()
     {
@@ -39,7 +39,7 @@ class ActivistNetworkTest extends TestCase
     }
 
     /**
-     * Tests ActivistNetwork::fill
+     * @covers ActivistNetwork::fill
      */
     public function testFill()
     {
@@ -57,7 +57,6 @@ class ActivistNetworkTest extends TestCase
 
     /**
      * Gets test data
-     *
      * @return string path to test data
      */
     private function getTestData(): string

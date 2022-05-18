@@ -22,7 +22,6 @@ abstract class Network
      *
      * @param string $activistName
      * @param string $fileName
-     * @throws \Exception
      */
     public function __construct(string $activistName, string $fileName)
     {

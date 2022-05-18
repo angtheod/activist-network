@@ -2,7 +2,7 @@
 
 namespace controllers;
 
-use models\ActivistNetwork;
+use models\Network;
 
 /**
  * Class NetworkController
@@ -11,17 +11,15 @@ use models\ActivistNetwork;
 class NetworkController
 {
     /**
-     * NetworkController constructor.
+     * NetworkController constructor (Use Dependency Injection)
      *
-     * @param string $activistName
-     * @param string $fileName
+     * @param Network $network
      */
-    public function __construct(string $activistName, string $fileName)
+    public function __construct(Network $network)
     {
-        try { //Sanitize input and pass to model
-            $activistNetwork = new ActivistNetwork(self::sanitizeStringSt($activistName), $fileName);
-            $activistNetwork->viewHome();
-            $activistNetwork->view();
+        try {
+            $network->viewHome();
+            $network->view();
         } catch (\Exception $e) {
             echo '<div id="error">' . $e->getMessage() . '</div>';
         }
