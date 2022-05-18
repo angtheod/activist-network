@@ -1,0 +1,17 @@
+{
+  "name": "angtheod/activist-network",
+  "description": "Sample PHP MVC project",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Angelos Theodorakopoulos",
+      "email": "angtheod@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^9.5.10"
+  },
+  "require": {
+  }
+}

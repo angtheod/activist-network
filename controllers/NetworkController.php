@@ -35,6 +35,6 @@ class NetworkController
      */
     public static function sanitizeStringSt($str): string
     {
-        return htmlspecialchars(strip_tags(filter_var($str, FILTER_SANITIZE_STRING)));
+        return htmlspecialchars(strip_tags($str));
     }
 }
