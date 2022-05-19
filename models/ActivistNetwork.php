@@ -25,9 +25,7 @@ class ActivistNetwork extends Network
         $this->createActions($this->data['actions']);
         $this->createActivists($this->data['activists']);
         $this->signActions($this->data['signed-actions']);
-        if ($activistName) {
-            $this->root = $this->activists[$activistName];
-        }
+        $this->root = $this->activists[$activistName] ?? null;
     }
 
     /**

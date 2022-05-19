@@ -116,6 +116,14 @@ abstract class Network
     }
 
     /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return empty($this->hashTable);
+    }
+
+    /**
      * Read data from file (json, csv)
      *
      * @param string $fileName

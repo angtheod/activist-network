@@ -18,7 +18,7 @@ class NetworkController
     public function __construct(Network $network)
     {
         try {
-            $network->viewHome();
+            $network->viewHome();   // TODO - Needs to be moved. This shouldn't be Network's responsibility
             $network->view();
         } catch (\Exception $e) {
             echo '<div id="error">' . $e->getMessage() . '</div>';

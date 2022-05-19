@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace tests\unit;
 
 use models\ActivistNetwork;
@@ -12,12 +14,36 @@ use PHPUnit\Framework\TestCase;
 class ActivistNetworkTest extends TestCase
 {
     /**
+     * @covers ActivistNetwork::__construct
+     */
+    public function testCanBeCreatedForExistingUser(): void
+    {
+        $this->assertInstanceOf(
+            ActivistNetwork::class,
+            $this->createInstance('TestUser')
+        );
+    }
+
+    /**
+     * @covers ActivistNetwork::__construct
+     * @covers ActivistNetwork::isEmpty
+     */
+    public function testCanNotBeCreatedForNotExistingUser(): void
+    {
+        $this->assertTrue(
+            $this->createInstance('NonExistingUser')->isEmpty()
+        );
+        $this->assertTrue(
+            $this->createInstance('')->isEmpty()
+        );
+    }
+
+    /**
      * @covers ActivistNetwork::createActions
      */
     public function testCreateActions()
     {
-        /** @var ActivistNetwork $an */
-        $an = $this->createActivistNetwork();
+        // TODO: implement me
     }
 
     /**
@@ -25,8 +51,7 @@ class ActivistNetworkTest extends TestCase
      */
     public function testCreateActivists()
     {
-        /** @var ActivistNetwork $an */
-        $an = $this->createActivistNetwork();
+        // TODO: implement me
     }
 
     /**
@@ -34,8 +59,7 @@ class ActivistNetworkTest extends TestCase
      */
     public function testSignActions()
     {
-        /** @var ActivistNetwork $an */
-        $an = $this->createActivistNetwork();
+        // TODO: implement me
     }
 
     /**
@@ -43,24 +67,25 @@ class ActivistNetworkTest extends TestCase
      */
     public function testFill()
     {
-        /** @var ActivistNetwork $an */
-        $an = $this->createActivistNetwork();
-    }
-
-    /**
-     *
-     */
-    private function createActivistNetwork()
-    {
         // TODO: implement me
     }
 
     /**
-     * Gets test data
+     * @param $activistName
+     *
+     * @return ActivistNetwork
+     */
+    private function createInstance($activistName): ActivistNetwork
+    {
+        return new ActivistNetwork($activistName, $this->getTestDataFile());
+    }
+
+    /**
+     * Gets test data file
      * @return string path to test data
      */
-    private function getTestData(): string
+    private function getTestDataFile(): string
     {
-        return TEST_DATA_JSON;
+        return TEST_DATA_FILE;
     }
 }

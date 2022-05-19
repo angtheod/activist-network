@@ -13,7 +13,8 @@
     {"id": 4, "name": "Maria"},
     {"id": 5, "name": "Helen"},
     {"id": 6, "name": "Jim"},
-    {"id": 7, "name": "Angelo"}
+    {"id": 7, "name": "Angelo"},
+    {"id": 8, "name": "TestUser"}
   ],
   "signed-actions": [
     ["Kyle", "Whales"],
