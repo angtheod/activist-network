@@ -73,10 +73,38 @@ class ActivistNetwork extends Network
     }
 
     /**
+     * @return Action[]
+     */
+    public function getActions(): array
+    {
+        return $this->actions;
+    }
+
+    /**
+     * @return Activist[]
+     */
+    public function getActivists(): array
+    {
+        return $this->activists;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSignedActions(): int
+    {
+        $signedActions = 0;
+        foreach ($this->activists as $activist) {
+            $signedActions += count($activist->getSignedActions());
+        }
+        return $signedActions;
+    }
+
+    /**
      * Fill the current activist's network tree
      *
      * @param Activist|null $activist
-     * @throws \Exception
+     * @throws \InvalidArgumentException
      */
     protected function fill($activist = null)
     {

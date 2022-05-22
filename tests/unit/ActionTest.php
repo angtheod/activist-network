@@ -13,19 +13,15 @@ class ActionTest extends TestCase
 {
     /**
      * @covers Action::signedBy
-     * @return void
      */
     public function testSignedBy()
     {
-        // TODO: implement me
     }
 
     /**
      * @covers Action::getSigningActivists
-     * @return void
      */
     public function testGetSigningActivists()
     {
-        // TODO: implement me
     }
 }

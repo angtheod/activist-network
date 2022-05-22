@@ -14,7 +14,7 @@ class Node
     /** @var Node */
     protected $parent;
 
-    /** @var array */
+    /** @var Node[] */
     protected $children = array();
 
     /**
@@ -54,17 +54,7 @@ class Node
     }
 
     /**
-     * @param Node $child
-     * @return bool
-     */
-    public function isParentOf(Node $child): bool
-    {
-		//TODO - check if this is correct
-        return isset($this->children[$child->id]);
-    }
-
-    /**
-     * @return array
+     * @return Node[]
      */
     public function getChildren(): array
     {

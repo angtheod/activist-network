@@ -64,12 +64,12 @@ abstract class Network
      * @param Node|null $parent
      *
      * @return int
-     * @throws \Exception
+     * @throws \InvalidArgumentException
      */
     public function addChild($child, $parent = null): int
     {
         if (!$child instanceof Node) {
-            throw new \Exception('A child node is required.');
+            throw new \InvalidArgumentException('Invalid type of child node.');
         }
 
         if (!$parent) {
@@ -89,9 +89,7 @@ abstract class Network
      */
     public function setChild($parent, $child): void
     {
-        if ($parent) {
-            $parent->setChild($child);
-        }
+        $parent?->setChild($child);
     }
 
     /**
@@ -100,9 +98,7 @@ abstract class Network
      */
     public function setParent($child, $parent): void
     {
-        if ($child) {
-            $child->setParent($parent);
-        }
+        $child?->setParent($parent);
     }
 
     /**
@@ -113,6 +109,45 @@ abstract class Network
     public function contains($node): bool
     {
         return isset($this->hashTable[$node->getId()]);
+    }
+
+    /**
+     * @return Node
+     */
+    public function getRoot(): Node
+    {
+        return $this->root;
+    }
+
+    /**
+     * Get the number of nodes in the network (including root node)
+     * @param $node
+     * @return int
+     */
+    public function getNetworkSize($node = null): int
+    {
+        static $size;
+        if (!$node) {
+            $node = $this->root;
+            $size = 1;
+        }
+        foreach ($node->getChildren() as $child) {
+            if ($child instanceof Node) {
+                $size++;
+                $this->getNetworkSize($child);
+            }
+        }
+
+        return $size;
+    }
+
+    /**
+     * Get the depth of the network
+     * @return int
+     */
+    public function getNetworkDepth(): int
+    {
+        return count($this->hashTable);
     }
 
     /**

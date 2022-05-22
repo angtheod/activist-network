@@ -3,8 +3,7 @@
     {"id": 1, "name": "Whales"},
     {"id": 2, "name": "Toxics"},
     {"id": 3, "name": "Nukes"},
-    {"id": 4, "name": "Climate"},
-    {"id": 5, "name": "Ozon"}
+    {"id": 4, "name": "Climate"}
   ],
   "activists": [
     {"id": 1, "name": "Kyle"},
@@ -12,9 +11,7 @@
     {"id": 3, "name": "Bill"},
     {"id": 4, "name": "Maria"},
     {"id": 5, "name": "Helen"},
-    {"id": 6, "name": "Jim"},
-    {"id": 7, "name": "Angelo"},
-    {"id": 8, "name": "TestUser"}
+    {"id": 6, "name": "TestUser"}
   ],
   "signed-actions": [
     ["Kyle", "Whales"],
@@ -24,10 +21,8 @@
     ["Maria", "Nukes"],
     ["Maria", "Climate"],
     ["Helen", "Climate"],
-    ["Helen", "Ozon"],
-    ["Jim", "Climate"],
-    ["Angelo", "Nukes"],
-    ["Jim", "Ozon"],
-    ["Remy", "Ozon"]
+    ["TestUser", "Whales"],
+    ["TestUser", "Climate"],
+    ["TestUser", "Toxics"]
   ]
 }
