@@ -25,8 +25,8 @@ abstract class Network
      */
     public function __construct(string $activistName, string $fileName)
     {
-        $this->init($activistName, $fileName);
         try {
+            $this->init($activistName, $fileName);
             $this->validate($this->root);       //Validate Node
             $this->hashTable[$this->root->getId()] = $this->root;
             $this->fill();
@@ -48,7 +48,7 @@ abstract class Network
     }
 
     /**
-     * @param $node
+     * @param Node $node
      *
      * @throws \Exception
      */
@@ -60,16 +60,19 @@ abstract class Network
     }
 
     /**
+     * Adds a new node to the network
+     * // TODO - consider whether this logic should be moved to Node::class
+     *
      * @param Node      $child
      * @param Node|null $parent
      *
      * @return int
      * @throws \InvalidArgumentException
      */
-    public function addChild($child, $parent = null): int
+    public function addNode($child, $parent = null): int
     {
-        if (!$child instanceof Node) {
-            throw new \InvalidArgumentException('Invalid type of child node.');
+        if (!$child instanceof Node || ($parent && !$parent instanceof Node)) {
+            throw new \InvalidArgumentException('Invalid node type.');
         }
 
         if (!$parent) {
@@ -108,6 +111,7 @@ abstract class Network
      */
     public function contains($node): bool
     {
+        // TODO - check if this is correct
         return isset($this->hashTable[$node->getId()]);
     }
 
@@ -121,6 +125,7 @@ abstract class Network
 
     /**
      * Get the number of nodes in the network (including root node)
+     *
      * @param $node
      * @return int
      */
@@ -134,7 +139,7 @@ abstract class Network
         foreach ($node->getChildren() as $child) {
             if ($child instanceof Node) {
                 $size++;
-                $this->getNetworkSize($child);
+                $this->getNetworkSize($child);    //Recursion
             }
         }
 
@@ -143,6 +148,7 @@ abstract class Network
 
     /**
      * Get the depth of the network
+     *
      * @return int
      */
     public function getNetworkDepth(): int

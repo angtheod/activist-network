@@ -17,32 +17,36 @@ class ActivistNetworkTest extends TestCase
     /**
      * @covers ActivistNetwork::__construct
      */
-    public function testCanBeCreatedForExistingUser(): void
+    public function testCanBeFilledForExistingUser(): void
     {
-        $this->assertFalse(
-            $this->createInstance('TestUser')->isEmpty()
+        $this->assertFalse(    //For UX purposes we catch all exceptions, so this is the way to test it was filled
+            $this->createSUT('TestUser')->isEmpty()
         );
     }
 
     /**
+     * @covers ActivistNetwork::readData
      * @covers ActivistNetwork::createActions
      * @covers ActivistNetwork::createActivists
      * @covers ActivistNetwork::signActions
      */
-    public function testCanBeFilledForExistingUser(): void
+    public function testReadData(): void
     {
-        $instance = $this->createInstance('TestUser');
+        $activistNetwork = $this->createSUT('TestUser');
         $this->assertCount(
             4,
-            $instance->getActions()
+            $activistNetwork->getActions()
         );
         $this->assertCount(
             6,
-            $instance->getActivists()
+            $activistNetwork->getActivists()
         );
         $this->assertEquals(
             10,
-            $instance->getSignedActions()
+            $activistNetwork->getSignedActions()
+        );
+        $this->assertTrue(    //Test invalid data
+            $this->createSUT('TestUser', 'tests/samples/invalidtestdata.json')->isEmpty()
         );
     }
 
@@ -51,11 +55,11 @@ class ActivistNetworkTest extends TestCase
      */
     public function testCanNotBeFilledForNonExistingUser(): void
     {
-        $this->assertTrue(
-            $this->createInstance('NonExistingUser')->isEmpty()
+        $this->assertTrue(    //For UX purposes we catch all exceptions, so this is the way to test it was not filled
+            $this->createSUT('NonExistingUser')->isEmpty()
         );
         $this->assertTrue(
-            $this->createInstance('')->isEmpty()
+            $this->createSUT('')->isEmpty()
         );
     }
 
@@ -66,53 +70,71 @@ class ActivistNetworkTest extends TestCase
      */
     public function testFillNetwork()
     {
-        $instance = $this->createInstance('TestUser');
+        $activistNetwork = $this->createSUT('TestUser');
         $this->assertEquals(
             9,
-            $instance->getNetworkSize()
+            $activistNetwork->getNetworkSize()
         );
         $this->assertEquals(
             3,
-            $instance->getNetworkDepth()
+            $activistNetwork->getNetworkDepth()
         );
     }
 
     /**
-     * @covers ActivistNetwork::addChild
-     * @covers Activist::getParent
-     * @covers Activist::getChildren
+     * @covers ActivistNetwork::addNode
+     * @covers ActivistNetwork::getRoot
      */
-    public function testAddChild(): void
+    public function testAddNode(): void
     {
-        $instance = $this->createInstance('TestUser');
-        $activist = new Activist(100, 'TestChildUser');
-        $instance->addChild($activist);    //Add child to root node
+        $activistNetwork = $this->createSUT('TestUser');
 
-        $this->assertEquals(               //Assert that root node is the parent of the newly added node
-            $instance->getRoot()->getId(),
-            $activist->getParent()->getId()
+        //Create a stub node to add as child and test it
+        $stubActivist = $this->createMock(Activist::class);            //Create stub
+        $stubActivist->method('getId')->willReturn(100);               //Configure stub
+        $stubActivist->method('getName')->willReturn('TestChildUser');
+        $stubActivist->method('setParent')->with($activistNetwork->getRoot());
+        $stubActivist->method('getParent')->willReturn($activistNetwork->getRoot());
+
+        $this->assertEquals(100, $stubActivist->getId());                     //Test stub
+        $this->assertEquals('TestChildUser', $stubActivist->getName());
+
+        //Assertions
+        $activistNetwork->addNode($stubActivist);        //Add stub node to network
+        $this->assertSame(                               //Assert root node is parent of newly added stub node
+            $activistNetwork->getRoot(),
+            $stubActivist->getParent()
         );
-        $this->assertTrue(                 //Assert newly added node is a child of root node
-            isset($instance->getRoot()->getChildren()[$activist->getId()])
+        $this->assertEquals(                             //Assert root node is parent of newly added stub node
+            6,
+            $stubActivist->getParent()->getId()
         );
+        $this->assertTrue(                               //Assert newly added stub node is a child of root node
+            isset($activistNetwork->getRoot()->getChildren()[$stubActivist->getId()])
+        );
+//        $this->assertTrue(                               //Assert network contains newly added stub node
+//            $activistNetwork->contains($stubActivist)    // TODO - Fix
+//        );
     }
 
     /**
-     * @param $activistName
+     * Creates instance of SUT (System Under Test)
      *
+     * @param string $activistName
+     * @param string|null $fileName
      * @return ActivistNetwork
      */
-    private function createInstance($activistName): ActivistNetwork
+    private function createSUT(string $activistName, string $fileName = null): ActivistNetwork
     {
-        return new ActivistNetwork($activistName, $this->getTestDataFile());
+        return new ActivistNetwork($activistName, $this->getTestDataFile($fileName));
     }
 
     /**
-     * Gets test data file
-     * @return string path to test data
+     * @param string|null $fileName
+     * @return string
      */
-    private function getTestDataFile(): string
+    private function getTestDataFile(string $fileName = null): string
     {
-        return TEST_DATA_FILE;
+        return $fileName ?? TEST_DATA_FILE;
     }
 }

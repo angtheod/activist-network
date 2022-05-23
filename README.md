@@ -22,9 +22,18 @@ The HashTable has the activist name as key and the activist object as node.
 Each node has parent node (except for the root node) and possibly children nodes.
 Tested with php 7.3.33 and 8.1.5
 
+Tests
+---------------------------
+Run unit tests using phpunit required by composer
+```
+vendor/bin/phpunit tests/unit/ActivistNetworkTest.php
+vendor/bin/phpunit tests/unit/ActionTest.php
+vendor/bin/phpunit tests/unit/ActivityTest.php
+```
+
 Notes
 ---------------------------
 In a project running on production environment we would
 use a secure connection to the server (SSL)
-add Input Validation and also
+add Input sanitization, data validation, escape output
 add protection against CSRF attack, XSS attack, SQL injection.

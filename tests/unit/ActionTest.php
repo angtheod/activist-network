@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 class ActionTest extends TestCase
 {
     /**
+     * @covers Action::__construct
      * @covers Action::signedBy
      */
     public function testSignedBy()
@@ -23,5 +24,15 @@ class ActionTest extends TestCase
      */
     public function testGetSigningActivists()
     {
+    }
+
+    /**
+     * @param int $id
+     * @param string $name
+     * @return Action
+     */
+    private function createSUT(int $id, string $name): Action
+    {
+        return new Action($id, $name);
     }
 }

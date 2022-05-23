@@ -32,7 +32,7 @@ class Action
     /**
      * @param Activist $activist
      */
-    public function signedBy(Activist $activist)
+    public function signedBy(Activist $activist): void
     {
         $this->activists[] = $activist;
     }
@@ -43,22 +43,6 @@ class Action
     public function getSigningActivists(): array
     {
         return $this->activists;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**

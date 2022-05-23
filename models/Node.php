@@ -49,7 +49,7 @@ class Node
     public function setChild(Node $child): void
     {
         if (!empty($child)) {
-            $this->children[$child->id] = $child;
+            $this->children[$child->getId()] = $child;
         }
     }
 

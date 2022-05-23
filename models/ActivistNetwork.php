@@ -17,7 +17,12 @@ class ActivistNetwork extends Network
     protected $activists = [];
 
     /**
-     * {@inheritDoc}
+     * Initialize network by reading data source and create respective nodes and their relations
+     *
+     * @param string $activistName
+     * @param string $fileName
+     * @return void
+     * @throws \Exception
      */
     public function init($activistName, $fileName): void
     {
@@ -29,21 +34,28 @@ class ActivistNetwork extends Network
     }
 
     /**
-     * {@inheritDoc}
+     * @param Activist $node
+     * @return void
+     * @throws \Exception
      */
-    protected function validate($activist): void
+    protected function validate($node): void
     {
-        if (!$activist instanceof Activist) {
+        if (!$node instanceof Activist) {
             throw new \Exception('Click on an existing activist\'s name to view his/her network.');
         }
     }
 
     /**
      * @param array $actions
+     * @return void
+     * @throws \Exception
      */
-    protected function createActions($actions = [])
+    protected function createActions($actions = []): void
     {
         foreach ($actions as $action) {
+            if (isset($this->actions[$action['name']])) {
+                throw new \Exception('Invalid data. Action duplication.');
+            }
             if (is_int($action['id'])) {
                 $this->actions[$action['name']] = new Action($action['id'], $action['name']);
             }
@@ -52,10 +64,15 @@ class ActivistNetwork extends Network
 
     /**
      * @param array $activists
+     * @return void
+     * @throws \Exception
      */
-    protected function createActivists($activists = [])
+    protected function createActivists($activists = []): void
     {
         foreach ($activists as $activist) {
+            if (isset($this->activists[$activist['name']])) {
+                throw new \Exception('Invalid data. Activist duplication.');
+            }
             if (is_int($activist['id'])) {
                 $this->activists[$activist['name']] = new Activist($activist['id'], $activist['name']);
             }
@@ -63,9 +80,10 @@ class ActivistNetwork extends Network
     }
 
     /**
-     * @param array $signedActions
+     * @param $signedActions
+     * @return void
      */
-    protected function signActions($signedActions = [])
+    protected function signActions($signedActions = []): void
     {
         foreach ($signedActions as $signedAction) {
             $this->activists[$signedAction[0]]->sign($this->actions[$signedAction[1]]);
@@ -105,8 +123,9 @@ class ActivistNetwork extends Network
      *
      * @param Activist|null $activist
      * @throws \InvalidArgumentException
+     * @return void
      */
-    protected function fill($activist = null)
+    protected function fill($activist = null): void
     {
         if (!$activist) {
             if (!$this->root) {
@@ -137,7 +156,7 @@ class ActivistNetwork extends Network
                     $activist->getId() !== $signedActivist->getId()   //Skip self
                     && !$this->contains($signedActivist)              //Skip if signedActivist already exists in subtree
                 ) {
-                    $this->addChild($signedActivist, $activist);
+                    $this->addNode($signedActivist, $activist);
                 }
             }
         }
