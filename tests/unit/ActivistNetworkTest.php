@@ -6,6 +6,7 @@ namespace tests\unit;
 
 use models\Activist;
 use models\ActivistNetwork;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -89,13 +90,8 @@ class ActivistNetworkTest extends TestCase
     {
         $activistNetwork = $this->createSUT('TestUser');
 
-        //Create a stub node to add as child and test it
-        $stubActivist = $this->createMock(Activist::class);            //Create stub
-        $stubActivist->method('getId')->willReturn(100);               //Configure stub
-        $stubActivist->method('getName')->willReturn('TestChildUser');
-        $stubActivist->method('setParent')->with($activistNetwork->getRoot());
-        $stubActivist->method('getParent')->willReturn($activistNetwork->getRoot());
-
+        //Create stub(s) of dependency class
+        $stubActivist = $this->createDependency(Activist::class, 100, 'TestChildUser', $activistNetwork);
         $this->assertEquals(100, $stubActivist->getId());                     //Test stub
         $this->assertEquals('TestChildUser', $stubActivist->getName());
 
@@ -118,13 +114,35 @@ class ActivistNetworkTest extends TestCase
     }
 
     /**
+     * Create a stub of the dependency class
+     *
+     * @param string        $originalClassName
+     * @param int           $id
+     * @param string        $name
+     * @param ActivistNetwork|null $sut
+     *
+     * @return Activist|Stub
+     */
+    protected function createDependency(string $originalClassName, int $id, string $name, ActivistNetwork $sut = null): Activist|Stub
+    {
+        //Create stub(s) of dependency class
+        $stub = $this->createStub($originalClassName);                   //Create stub
+        $stub->method('getId')->willReturn($id);               //Configure stub
+        $stub->method('getName')->willReturn($name);
+        $stub->method('setParent')->with($sut->getRoot());
+        $stub->method('getParent')->willReturn($sut->getRoot());
+
+        return $stub;
+    }
+
+    /**
      * Creates instance of SUT (System Under Test)
      *
      * @param string $activistName
      * @param string|null $fileName
      * @return ActivistNetwork
      */
-    private function createSUT(string $activistName, string $fileName = null): ActivistNetwork
+    protected function createSUT(string $activistName, string $fileName = null): ActivistNetwork
     {
         return new ActivistNetwork($activistName, $this->getTestDataFile($fileName));
     }
@@ -133,7 +151,7 @@ class ActivistNetworkTest extends TestCase
      * @param string|null $fileName
      * @return string
      */
-    private function getTestDataFile(string $fileName = null): string
+    protected function getTestDataFile(string $fileName = null): string
     {
         return $fileName ?? TEST_DATA_FILE;
     }
