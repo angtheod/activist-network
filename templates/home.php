@@ -23,7 +23,7 @@ $activists    = $data['activists'];
 <div id="section">
     <?php foreach ($activists as $activist) {
         $name = htmlspecialchars($activist['name']); ?>
-        <button data-val="<?= $name ?>" class="btn activist-btn"><?= $name ?></button>
+        <button data-val="<?= $name ?>" class="btn activist-btn <?= $activistName === $name ? 'selected-btn' : '' ?>"><?= $name ?></button>
     <?php } ?>
     <a href=".">Clear</a><br />
 

@@ -8,10 +8,22 @@
 #depth5 {background-color: #011c93; color: white}
 #depth6 {background-color: #001a7a; color: white}   /* We could use Sass here to have variable selectors and variable color values */
 
+.btn:hover:not(.selected-btn) {
+    background: white;
+    color: black;
+}
+
 .activist-btn {
     background: black;
     color: white;
     font-weight: bold;
+}
+
+.selected-btn {
+    background: white;
+    color: black;
+    font-weight: bold;
+    border: none;
 }
 
 .hoverable {
@@ -21,6 +33,10 @@
 
 .hoverable .hoverable__tooltip {
     display: none;
+}
+
+.hoverable__main:hover {
+    color: #c9e7f8 !important;
 }
 
 .hoverable:hover .hoverable__tooltip {
