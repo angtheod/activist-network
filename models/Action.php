@@ -32,9 +32,19 @@ class Action
     /**
      * @param Activist $activist
      */
-    public function signedBy(Activist $activist): void
+    public function signBy(Activist $activist): void
     {
-        $this->activists[] = $activist;
+        $this->activists[$activist->getId()] = $activist;
+    }
+
+    /**
+     * @param Activist $activist
+     *
+     * @return bool
+     */
+    public function isSignedBy(Activist $activist): bool
+    {
+        return isset($this->activists[$activist->getId()]);
     }
 
     /**

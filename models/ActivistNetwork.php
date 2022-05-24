@@ -56,7 +56,7 @@ class ActivistNetwork extends Network
             if (isset($this->actions[$action['name']])) {
                 throw new \Exception('Invalid data. Action duplication.');
             }
-            if (is_int($action['id'])) {
+            if (is_int($action['id'])) {    // TODO - use `id` as identifier/key
                 $this->actions[$action['name']] = new Action($action['id'], $action['name']);
             }
         }
@@ -73,7 +73,7 @@ class ActivistNetwork extends Network
             if (isset($this->activists[$activist['name']])) {
                 throw new \Exception('Invalid data. Activist duplication.');
             }
-            if (is_int($activist['id'])) {
+            if (is_int($activist['id'])) {    // TODO - use `id` as identifier/key
                 $this->activists[$activist['name']] = new Activist($activist['id'], $activist['name']);
             }
         }

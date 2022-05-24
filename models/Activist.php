@@ -32,7 +32,7 @@ class Activist extends Node
     public function sign(Action $action)
     {
         $this->actions[] = $action;
-        $action->signedBy($this);
+        $action->signBy($this);
     }
 
     /**

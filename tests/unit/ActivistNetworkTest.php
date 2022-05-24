@@ -15,6 +15,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ActivistNetworkTest extends TestCase
 {
+    public const SUT = ActivistNetwork::class;  //System Under Test
+
     /**
      * @covers ActivistNetwork::__construct
      */
@@ -116,9 +118,9 @@ class ActivistNetworkTest extends TestCase
     /**
      * Create a stub of the dependency class
      *
-     * @param string        $originalClassName
-     * @param int           $id
-     * @param string        $name
+     * @param string               $originalClassName
+     * @param int                  $id
+     * @param string               $name
      * @param ActivistNetwork|null $sut
      *
      * @return Activist|Stub
@@ -140,15 +142,17 @@ class ActivistNetworkTest extends TestCase
      *
      * @param string $activistName
      * @param string|null $fileName
+     *
      * @return ActivistNetwork
      */
     protected function createSUT(string $activistName, string $fileName = null): ActivistNetwork
     {
-        return new ActivistNetwork($activistName, $this->getTestDataFile($fileName));
+        return new (self::SUT)($activistName, $this->getTestDataFile($fileName));
     }
 
     /**
      * @param string|null $fileName
+     *
      * @return string
      */
     protected function getTestDataFile(string $fileName = null): string

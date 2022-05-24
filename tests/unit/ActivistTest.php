@@ -15,6 +15,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ActivistTest extends TestCase
 {
+    public const SUT = Activist::class;    //System Under Test
+
     /**
      * @covers Activist::__construct
      * @covers Activist::setParent
@@ -61,33 +63,36 @@ class ActivistTest extends TestCase
         $activist = $this->createSUT(100, 'TestUser');
 
         //Create stub(s) of dependency class
-        $stubAction1 = $this->createDependency(Action::class, 1, 'Whales', $activist);
-        $this->assertEquals(1, $stubAction1->getId());            //Test stub
+        $stubAction1 = $this->createDependency(Action::class, 101, 'Whales', $activist);
+        $this->assertEquals(101, $stubAction1->getId());            //Test stub
         $this->assertEquals('Whales', $stubAction1->getName());
 
-        $stubAction2 = $this->createDependency(Action::class, 2, 'Toxics', $activist);
-        $this->assertEquals(2, $stubAction2->getId());            //Test stub
+        $stubAction2 = $this->createDependency(Action::class, 102, 'Toxics', $activist);
+        $this->assertEquals(102, $stubAction2->getId());            //Test stub
         $this->assertEquals('Toxics', $stubAction2->getName());
 
-        $stubAction3 = $this->createDependency(Action::class, 4, 'Climate', $activist);
-        $this->assertEquals(4, $stubAction3->getId());            //Test stub
+        $stubAction3 = $this->createDependency(Action::class, 103, 'Climate', $activist);
+        $this->assertEquals(103, $stubAction3->getId());            //Test stub
         $this->assertEquals('Climate', $stubAction3->getName());
 
         //Assertions
         $activist->sign($stubAction1);
-        $activist->sign($stubAction2);
+        //$activist->sign($stubAction2);
         $activist->sign($stubAction3);
         $this->assertCount(
-            3,
+            2,
             $activist->getSignedActions()
         );
         $this->assertEquals(
             [
                 'Whales',
-                'Toxics',
                 'Climate'
             ],
             $activist->getSignedActionsNames()
+        );
+        $this->assertNotContains(
+            $stubAction2,
+            $activist->getSignedActions()
         );
     }
 
@@ -106,7 +111,7 @@ class ActivistTest extends TestCase
         $stub = $this->createStub($originalClassName);               //Create stub
         $stub->method('getId')->willReturn($id);           //Configure stub
         $stub->method('getName')->willReturn($name);
-        $stub->method('signedBy')->with($sut);
+        $stub->method('signBy')->with($sut);
 
         return $stub;
     }
@@ -116,10 +121,11 @@ class ActivistTest extends TestCase
      *
      * @param int $id
      * @param string $name
+     *
      * @return Activist
      */
     protected function createSUT(int $id, string $name): Activist
     {
-        return new Activist($id, $name);
+        return new (self::SUT)($id, $name);
     }
 }

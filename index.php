@@ -20,9 +20,9 @@ use models\ActivistNetwork;
 require_once 'autoload.php';
 ini_set('display_errors', DISPLAY_ERRORS);                           //Set Debug mode
 
-(new NetworkController(
+new NetworkController(
     new ActivistNetwork(
         NetworkController::sanitizeStringSt($_GET['activist-name'] ?? ''),    //Sanitize input and pass to model
         DATA_FILE
     )
-));
+);
