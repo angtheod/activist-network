@@ -1,9 +1,18 @@
 ## General information
 
+This project is -Not- supposed to be an example of applying SOLID practices, but more of a small task playing with mechanisms like
+recursion, hash tables, custom autoloader, unit testing and some more.
+
+No framework, no data persistence, no docker here. Has a UI, as can be seen in the example.png. Has Unit tests that can be run with phpunit.
+
+In a project running on production environment we would use a secure connection to the server (SSL)
+add Input sanitization, data validation, escape output add protection against CSRF attack, XSS attack, SQL injection.
+
+## Usage
 ```
 git clone git@github.com:angtheod/activist-network.git activist-network
 ```
-Clone the Activist Network repository and test locally and edit the data.json file to add/remove/update existing actions, activists and signed actions.
+Clone the Activist Network repository for local testing. Edit the data.json file to add/remove/update existing actions, activists and signed actions.
 
 Description
 ---------------------------
@@ -30,10 +39,3 @@ vendor/bin/phpunit tests/unit/ActivistNetworkTest.php
 vendor/bin/phpunit tests/unit/ActionTest.php
 vendor/bin/phpunit tests/unit/ActivityTest.php
 ```
-
-Notes
----------------------------
-In a project running on production environment we would
-use a secure connection to the server (SSL)
-add Input sanitization, data validation, escape output
-add protection against CSRF attack, XSS attack, SQL injection.
